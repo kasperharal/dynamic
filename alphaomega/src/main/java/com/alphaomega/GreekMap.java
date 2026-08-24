@@ -8,7 +8,21 @@ import java.util.Map.Entry;
 
 
 public class GreekMap implements Iterable<String> {
-    protected final HashMap<String, Object> values = new HashMap<>();
+    protected final HashMap<String, Object> values;
+
+    /**
+     * creates a new GreekMap
+     */
+    public GreekMap()  {
+        values = new HashMap<>();
+    }
+
+    /**
+     * creates a new AlphaOmegaParser and gets a map from it
+     */
+    public GreekMap(String src) throws AlphaOmegaExeption {
+        values = new AlphaOmegaParser(src).getMap().values;
+    }
 
     /**
      * checks if value is null
@@ -69,7 +83,7 @@ public class GreekMap implements Iterable<String> {
      */
     public boolean optBoolean(String key, boolean defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Boolean b?b:null;
+        return object instanceof Boolean b?b:defaultValue;
     }
 
     /**
@@ -91,7 +105,7 @@ public class GreekMap implements Iterable<String> {
      */
     public byte optByte(String key) {
         Object object = this.opt(key);
-        return object instanceof Byte b?b:null;
+        return object instanceof Number num?num.byteValue():null;
     }
 
     /**
@@ -102,7 +116,7 @@ public class GreekMap implements Iterable<String> {
      */
     public byte optByte(String key, byte defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Byte b?b:null;
+        return object instanceof Number num?num.byteValue():defaultValue;
     }
 
     /**
@@ -113,7 +127,7 @@ public class GreekMap implements Iterable<String> {
      */
     public byte getByte(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Byte b) return b;
+        if (object instanceof Number num) return num.byteValue();
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -124,7 +138,7 @@ public class GreekMap implements Iterable<String> {
      */
     public short optShort(String key) {
         Object object = this.opt(key);
-        return object instanceof Short b?b:null;
+        return object instanceof Number num?num.shortValue():null;
     }
 
     /**
@@ -135,7 +149,7 @@ public class GreekMap implements Iterable<String> {
      */
     public short optShort(String key, short defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Short b?b:null;
+        return object instanceof Number num?num.shortValue():defaultValue;
     }
 
     /**
@@ -146,7 +160,7 @@ public class GreekMap implements Iterable<String> {
      */
     public short getShort(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Short b) return b;
+        if (object instanceof Number num) return num.shortValue();
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -157,7 +171,7 @@ public class GreekMap implements Iterable<String> {
      */
     public int optInt(String key) {
         Object object = this.opt(key);
-        return object instanceof Integer b?b:null;
+        return object instanceof Number num?num.intValue():null;
     }
 
     /**
@@ -168,7 +182,7 @@ public class GreekMap implements Iterable<String> {
      */
     public int optInt(String key, int defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Integer b?b:null;
+        return object instanceof Number num?num.intValue():defaultValue;
     }
 
     /**
@@ -179,7 +193,7 @@ public class GreekMap implements Iterable<String> {
      */
     public int getInt(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Integer b) return b;
+        if (object instanceof Number num) return num.intValue();
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -190,7 +204,7 @@ public class GreekMap implements Iterable<String> {
      */
     public long optLong(String key) {
         Object object = this.opt(key);
-        return object instanceof Long b?b:null;
+        return object instanceof Number num?num.longValue():null;
     }
 
     /**
@@ -201,7 +215,7 @@ public class GreekMap implements Iterable<String> {
      */
     public long optLong(String key, long defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Long b?b:null;
+        return object instanceof Number num?num.longValue():defaultValue;
     }
 
     /**
@@ -212,7 +226,7 @@ public class GreekMap implements Iterable<String> {
      */
     public long getLong(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Long b) return b;
+        if (object instanceof Number num) return num.longValue();
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -223,7 +237,7 @@ public class GreekMap implements Iterable<String> {
      */
     public float optFloat(String key) {
         Object object = this.opt(key);
-        return object instanceof Float b?b:null;
+        return object instanceof Number num?num.floatValue():null;
     }
 
     /**
@@ -234,7 +248,7 @@ public class GreekMap implements Iterable<String> {
      */
     public float optFloat(String key, float defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Float b?b:null;
+        return object instanceof Number num?num.floatValue():defaultValue;
     }
 
     /**
@@ -245,7 +259,7 @@ public class GreekMap implements Iterable<String> {
      */
     public float getFloat(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Float b) return b;
+        if (object instanceof Number num) return num.floatValue();
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -256,7 +270,7 @@ public class GreekMap implements Iterable<String> {
      */
     public double optDouble(String key) {
         Object object = this.opt(key);
-        return object instanceof Double b?b:null;
+        return object instanceof Number num?num.doubleValue():null;
     }
 
     /**
@@ -267,7 +281,7 @@ public class GreekMap implements Iterable<String> {
      */
     public double optDouble(String key, double defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Double b?b:null;
+        return object instanceof Number num?num.doubleValue():defaultValue;
     }
 
     /**
@@ -278,7 +292,7 @@ public class GreekMap implements Iterable<String> {
      */
     public double getDouble(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Double b) return b;
+        if (object instanceof Number num) return num.doubleValue();
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -289,7 +303,7 @@ public class GreekMap implements Iterable<String> {
      */
     public Number optNumber(String key) {
         Object object = this.opt(key);
-        return object instanceof Number b?b:null;
+        return object instanceof Number num?num:null;
     }
 
     /**
@@ -300,7 +314,7 @@ public class GreekMap implements Iterable<String> {
      */
     public Number optNumber(String key, Number defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof Number b?b:null;
+        return object instanceof Number num?num:defaultValue;
     }
 
     /**
@@ -311,7 +325,7 @@ public class GreekMap implements Iterable<String> {
      */
     public Number getNumber(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof Number b) return b;
+        if (object instanceof Number num) return num;
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -322,7 +336,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekList optList(String key) {
         Object object = this.opt(key);
-        return object instanceof GreekList b?b:null;
+        return object instanceof GreekList list?list:null;
     }
 
     /**
@@ -333,7 +347,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekList optList(String key, GreekList defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof GreekList b?b:null;
+        return object instanceof GreekList list?list:defaultValue;
     }
 
     /**
@@ -344,7 +358,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekList getList(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof GreekList b) return b;
+        if (object instanceof GreekList list) return list;
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -355,7 +369,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekSet optSet(String key) {
         Object object = this.opt(key);
-        return object instanceof GreekSet b?b:null;
+        return object instanceof GreekSet set?set:null;
     }
 
     /**
@@ -366,7 +380,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekSet optSet(String key, GreekSet defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof GreekSet b?b:null;
+        return object instanceof GreekSet set?set:defaultValue;
     }
 
     /**
@@ -377,7 +391,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekSet getSet(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof GreekSet b) return b;
+        if (object instanceof GreekSet set) return set;
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -388,7 +402,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekMap optMap(String key) {
         Object object = this.opt(key);
-        return object instanceof GreekMap b?b:null;
+        return object instanceof GreekMap map?map:null;
     }
 
     /**
@@ -399,7 +413,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekMap optMap(String key, GreekMap defaultValue) {
         Object object = this.opt(key, defaultValue);
-        return object instanceof GreekMap b?b:null;
+        return object instanceof GreekMap map?map:defaultValue;
     }
 
     /**
@@ -410,7 +424,7 @@ public class GreekMap implements Iterable<String> {
      */
     public GreekMap getMap(String key) throws AlphaOmegaExeption {
         Object object = this.get(key);
-        if (object instanceof GreekMap b) return b;
+        if (object instanceof GreekMap map) return map;
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
@@ -513,6 +527,6 @@ public class GreekMap implements Iterable<String> {
 
     @Override
     public String toString() {
-        return values.toString();
+        return values.toString().replace("=", ":");
     }
 }

@@ -19,7 +19,7 @@ public class AlphaOmega {
      * @throws AlphaOmegaExeption if <code>obj</code> is not a byte
      */
     public static byte byteOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof Byte b) return b;
+        if (obj instanceof Number b) return b.byteValue();
         else throw new AlphaOmegaExeption("value is not a byte");
     }
 
@@ -30,7 +30,7 @@ public class AlphaOmega {
      * @throws AlphaOmegaExeption if <code>obj</code> is not a short
      */
     public static short shortOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof Short b) return b;
+        if (obj instanceof Number b) return b.shortValue();
         else throw new AlphaOmegaExeption("value is not a short");
     }
 
@@ -41,7 +41,7 @@ public class AlphaOmega {
      * @throws AlphaOmegaExeption if <code>obj</code> is not a int
      */
     public static int intOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof Integer b) return b;
+        if (obj instanceof Number b) return b.intValue();
         else throw new AlphaOmegaExeption("value is not a int");
     }
 
@@ -52,7 +52,7 @@ public class AlphaOmega {
      * @throws AlphaOmegaExeption if <code>obj</code> is not a long
      */
     public static long longOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof Long b) return b;
+        if (obj instanceof Number b) return b.longValue();
         else throw new AlphaOmegaExeption("value is not a long");
     }
 
@@ -63,7 +63,7 @@ public class AlphaOmega {
      * @throws AlphaOmegaExeption if <code>obj</code> is not a float
      */
     public static float floatOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof Float b) return b;
+        if (obj instanceof Number b) return b.floatValue();
         else throw new AlphaOmegaExeption("value is not a float");
     }
 
@@ -74,7 +74,7 @@ public class AlphaOmega {
      * @throws AlphaOmegaExeption if <code>obj</code> is not a double
      */
     public static double doubleOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof Double b) return b;
+        if (obj instanceof Number b) return b.doubleValue();
         else throw new AlphaOmegaExeption("value is not a double");
     }
 

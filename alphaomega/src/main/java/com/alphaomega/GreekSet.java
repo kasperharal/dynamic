@@ -5,7 +5,21 @@ import java.util.Iterator;
 
 
 public class GreekSet implements Iterable<Object> {
-    protected final HashSet<Object> values = new HashSet<>();
+    protected final HashSet<Object> values;
+
+    /**
+     * creates a new GreekSet
+     */
+    public GreekSet()  {
+        values = new HashSet<>();
+    }
+
+    /**
+     * creates a new AlphaOmegaParser and gets a set from it
+     */
+    public GreekSet(String src) throws AlphaOmegaExeption {
+        values = new AlphaOmegaParser(src).getSet().values;
+    }
 
     /**
      * adds a value if not pressent to the set

@@ -5,7 +5,21 @@ import java.util.Iterator;
 
 
 public class GreekList implements Iterable<Object> {
-    protected final ArrayList<Object> values = new ArrayList<>();
+    protected final ArrayList<Object> values;
+
+    /**
+     * creates a new GreekList
+     */
+    public GreekList()  {
+        values = new ArrayList<>();
+    }
+
+    /**
+     * creates a new AlphaOmegaParser and gets a list from it
+     */
+    public GreekList(String src) throws AlphaOmegaExeption {
+        values = new AlphaOmegaParser(src).getList().values;
+    }
 
     /**
      * checks if value is null
@@ -66,7 +80,7 @@ public class GreekList implements Iterable<Object> {
      */
     public boolean optBoolean(int index, boolean defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Boolean b?b:null;
+        return object instanceof Boolean b?b:defaultValue;
     }
 
     /**
@@ -88,7 +102,7 @@ public class GreekList implements Iterable<Object> {
      */
     public byte optByte(int index) {
         Object object = this.opt(index);
-        return object instanceof Byte b?b:null;
+        return object instanceof Number num?num.byteValue():null;
     }
 
     /**
@@ -99,7 +113,7 @@ public class GreekList implements Iterable<Object> {
      */
     public byte optByte(int index, byte defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Byte b?b:null;
+        return object instanceof Number num?num.byteValue():defaultValue;
     }
 
     /**
@@ -110,7 +124,7 @@ public class GreekList implements Iterable<Object> {
      */
     public byte getByte(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Byte b) return b;
+        if (object instanceof Number num) return num.byteValue();
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -121,7 +135,7 @@ public class GreekList implements Iterable<Object> {
      */
     public short optShort(int index) {
         Object object = this.opt(index);
-        return object instanceof Short b?b:null;
+        return object instanceof Number num?num.shortValue():null;
     }
 
     /**
@@ -132,7 +146,7 @@ public class GreekList implements Iterable<Object> {
      */
     public short optShort(int index, short defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Short b?b:null;
+        return object instanceof Number num?num.shortValue():defaultValue;
     }
 
     /**
@@ -143,7 +157,7 @@ public class GreekList implements Iterable<Object> {
      */
     public short getShort(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Short b) return b;
+        if (object instanceof Number num) return num.shortValue();
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -154,7 +168,7 @@ public class GreekList implements Iterable<Object> {
      */
     public int optInt(int index) {
         Object object = this.opt(index);
-        return object instanceof Integer b?b:null;
+        return object instanceof Number num?num.intValue():null;
     }
 
     /**
@@ -165,7 +179,7 @@ public class GreekList implements Iterable<Object> {
      */
     public int optInt(int index, int defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Integer b?b:null;
+        return object instanceof Number num?num.intValue():defaultValue;
     }
 
     /**
@@ -176,7 +190,7 @@ public class GreekList implements Iterable<Object> {
      */
     public int getInt(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Integer b) return b;
+        if (object instanceof Number num) return num.intValue();
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -187,7 +201,7 @@ public class GreekList implements Iterable<Object> {
      */
     public long optLong(int index) {
         Object object = this.opt(index);
-        return object instanceof Long b?b:null;
+        return object instanceof Number num?num.longValue():null;
     }
 
     /**
@@ -198,7 +212,7 @@ public class GreekList implements Iterable<Object> {
      */
     public long optLong(int index, long defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Long b?b:null;
+        return object instanceof Number num?num.longValue():defaultValue;
     }
 
     /**
@@ -209,7 +223,7 @@ public class GreekList implements Iterable<Object> {
      */
     public long getLong(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Long b) return b;
+        if (object instanceof Number num) return num.longValue();
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -220,7 +234,7 @@ public class GreekList implements Iterable<Object> {
      */
     public float optFloat(int index) {
         Object object = this.opt(index);
-        return object instanceof Float b?b:null;
+        return object instanceof Number num?num.floatValue():null;
     }
 
     /**
@@ -231,7 +245,7 @@ public class GreekList implements Iterable<Object> {
      */
     public float optFloat(int index, float defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Float b?b:null;
+        return object instanceof Number num?num.floatValue():defaultValue;
     }
 
     /**
@@ -242,7 +256,7 @@ public class GreekList implements Iterable<Object> {
      */
     public float getFloat(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Float b) return b;
+        if (object instanceof Number num) return num.floatValue();
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -253,7 +267,7 @@ public class GreekList implements Iterable<Object> {
      */
     public double optDouble(int index) {
         Object object = this.opt(index);
-        return object instanceof Double b?b:null;
+        return object instanceof Number num?num.doubleValue():null;
     }
 
     /**
@@ -264,7 +278,7 @@ public class GreekList implements Iterable<Object> {
      */
     public double optDouble(int index, double defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Double b?b:null;
+        return object instanceof Number num?num.doubleValue():defaultValue;
     }
 
     /**
@@ -275,7 +289,7 @@ public class GreekList implements Iterable<Object> {
      */
     public double getDouble(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Double b) return b;
+        if (object instanceof Number num) return num.doubleValue();
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -286,7 +300,7 @@ public class GreekList implements Iterable<Object> {
      */
     public Number optNumber(int index) {
         Object object = this.opt(index);
-        return object instanceof Number b?b:null;
+        return object instanceof Number num?num:null;
     }
 
     /**
@@ -297,7 +311,7 @@ public class GreekList implements Iterable<Object> {
      */
     public Number optNumber(int index, Number defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof Number b?b:null;
+        return object instanceof Number num?num:defaultValue;
     }
 
     /**
@@ -308,7 +322,7 @@ public class GreekList implements Iterable<Object> {
      */
     public Number getNumber(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof Number b) return b;
+        if (object instanceof Number num) return num;
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -319,7 +333,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekList optList(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekList b?b:null;
+        return object instanceof GreekList list?list:null;
     }
 
     /**
@@ -330,7 +344,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekList optList(int index, GreekList defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof GreekList b?b:null;
+        return object instanceof GreekList list?list:defaultValue;
     }
 
     /**
@@ -341,7 +355,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekList getList(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof GreekList b) return b;
+        if (object instanceof GreekList list) return list;
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -352,7 +366,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekSet optSet(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekSet b?b:null;
+        return object instanceof GreekSet set?set:null;
     }
 
     /**
@@ -363,7 +377,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekSet optSet(int index, GreekSet defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof GreekSet b?b:null;
+        return object instanceof GreekSet set?set:defaultValue;
     }
 
     /**
@@ -374,7 +388,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekSet getSet(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof GreekSet b) return b;
+        if (object instanceof GreekSet set) return set;
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -385,7 +399,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekMap optMap(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekMap b?b:null;
+        return object instanceof GreekMap map?map:null;
     }
 
     /**
@@ -396,7 +410,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekMap optMap(int index, GreekMap defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof GreekMap b?b:null;
+        return object instanceof GreekMap map?map:defaultValue;
     }
 
     /**
@@ -407,7 +421,7 @@ public class GreekList implements Iterable<Object> {
      */
     public GreekMap getMap(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof GreekMap b) return b;
+        if (object instanceof GreekMap map) return map;
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 

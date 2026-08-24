@@ -28,10 +28,11 @@ alpha-omega is a markup language
     - `\"` → double qoute
     - `\'` → single qoute
     - `\0 - \377` → octal escape
-## complex types
+## compund types
 - **list:** list of values  
 *syntax:* `[...]`
 - **set:** set of unique unorderd values  
 *syntax:* `(...)`
 - **map:**  key value pairs  
 *syntax:* `{...}`
+## complex types
