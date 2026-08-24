@@ -1,0 +1,518 @@
+package com.alphaomega;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Map.Entry;
+
+
+public class GreekMap implements Iterable<String> {
+    protected final HashMap<String, Object> values = new HashMap<>();
+
+    /**
+     * checks if value is null
+     * @param key
+     * @return returns true if key is pressent and <code>map[key] == null</code> otherwise it returns false
+     */
+    public boolean isNull(String key) {
+        return values.containsKey(key) && values.get(key) == null?true:false;
+    }
+
+    /**
+     * gets value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent otherwise it returns <code>null</code>
+     */
+    public Object opt(String key) {
+        return values.get(key);
+    }
+
+    /**
+     * gets value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent otherwise it returns <code>defaultValue</code>
+     */
+    public Object opt(String key, Object defaultValue) {
+        Object object = this.opt(key);
+        return object == null?defaultValue:object;
+    }
+
+    /**
+     * gets value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent
+     */
+    public Object get(String key) throws AlphaOmegaExeption {
+        Object object = this.opt(key);
+        if (object == null) throw new AlphaOmegaExeption("map["+key+"] was not found");
+        return object;
+    }
+
+    /**
+     * gets boolean value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is boolean otherwise it returns <code>null</code>
+     */
+    public boolean optBoolean(String key) {
+        Object object = this.opt(key);
+        return object instanceof Boolean b?b:null;
+    }
+
+    /**
+     * gets boolean value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is boolean otherwise it returns <code>defaultValue</code>
+     */
+    public boolean optBoolean(String key, boolean defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Boolean b?b:null;
+    }
+
+    /**
+     * gets boolean value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a boolean
+     */
+    public boolean getBoolean(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Boolean b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets byte value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is byte otherwise it returns <code>null</code>
+     */
+    public byte optByte(String key) {
+        Object object = this.opt(key);
+        return object instanceof Byte b?b:null;
+    }
+
+    /**
+     * gets byte value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is byte otherwise it returns <code>defaultValue</code>
+     */
+    public byte optByte(String key, byte defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Byte b?b:null;
+    }
+
+    /**
+     * gets byte value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a byte
+     */
+    public byte getByte(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Byte b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets short value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is short otherwise it returns <code>null</code>
+     */
+    public short optShort(String key) {
+        Object object = this.opt(key);
+        return object instanceof Short b?b:null;
+    }
+
+    /**
+     * gets short value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is short otherwise it returns <code>defaultValue</code>
+     */
+    public short optShort(String key, short defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Short b?b:null;
+    }
+
+    /**
+     * gets short value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a short
+     */
+    public short getShort(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Short b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets int value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is int otherwise it returns <code>null</code>
+     */
+    public int optInt(String key) {
+        Object object = this.opt(key);
+        return object instanceof Integer b?b:null;
+    }
+
+    /**
+     * gets int value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is int otherwise it returns <code>defaultValue</code>
+     */
+    public int optInt(String key, int defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Integer b?b:null;
+    }
+
+    /**
+     * gets int value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a int
+     */
+    public int getInt(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Integer b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets long value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is long otherwise it returns <code>null</code>
+     */
+    public long optLong(String key) {
+        Object object = this.opt(key);
+        return object instanceof Long b?b:null;
+    }
+
+    /**
+     * gets long value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is long otherwise it returns <code>defaultValue</code>
+     */
+    public long optLong(String key, long defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Long b?b:null;
+    }
+
+    /**
+     * gets long value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a long
+     */
+    public long getLong(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Long b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets float value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is float otherwise it returns <code>null</code>
+     */
+    public float optFloat(String key) {
+        Object object = this.opt(key);
+        return object instanceof Float b?b:null;
+    }
+
+    /**
+     * gets float value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is float otherwise it returns <code>defaultValue</code>
+     */
+    public float optFloat(String key, float defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Float b?b:null;
+    }
+
+    /**
+     * gets float value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a float
+     */
+    public float getFloat(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Float b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets double value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is double otherwise it returns <code>null</code>
+     */
+    public double optDouble(String key) {
+        Object object = this.opt(key);
+        return object instanceof Double b?b:null;
+    }
+
+    /**
+     * gets double value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is double otherwise it returns <code>defaultValue</code>
+     */
+    public double optDouble(String key, double defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Double b?b:null;
+    }
+
+    /**
+     * gets double value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a double
+     */
+    public double getDouble(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Double b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets number value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is number otherwise it returns <code>null</code>
+     */
+    public Number optNumber(String key) {
+        Object object = this.opt(key);
+        return object instanceof Number b?b:null;
+    }
+
+    /**
+     * gets number value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is number otherwise it returns <code>defaultValue</code>
+     */
+    public Number optNumber(String key, Number defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof Number b?b:null;
+    }
+
+    /**
+     * gets number value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a number
+     */
+    public Number getNumber(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof Number b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets map value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is map otherwise it returns <code>null</code>
+     */
+    public GreekList optList(String key) {
+        Object object = this.opt(key);
+        return object instanceof GreekList b?b:null;
+    }
+
+    /**
+     * gets map value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is map otherwise it returns <code>defaultValue</code>
+     */
+    public GreekList optList(String key, GreekList defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof GreekList b?b:null;
+    }
+
+    /**
+     * gets map value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a map
+     */
+    public GreekList getList(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof GreekList b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets set value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is set otherwise it returns <code>null</code>
+     */
+    public GreekSet optSet(String key) {
+        Object object = this.opt(key);
+        return object instanceof GreekSet b?b:null;
+    }
+
+    /**
+     * gets set value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is set otherwise it returns <code>defaultValue</code>
+     */
+    public GreekSet optSet(String key, GreekSet defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof GreekSet b?b:null;
+    }
+
+    /**
+     * gets set value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a set
+     */
+    public GreekSet getSet(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof GreekSet b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * gets map value or null
+     * @param key
+     * @return returns <code>map[key]</code> if pressent and is map otherwise it returns <code>null</code>
+     */
+    public GreekMap optMap(String key) {
+        Object object = this.opt(key);
+        return object instanceof GreekMap b?b:null;
+    }
+
+    /**
+     * gets map value or default
+     * @param key
+     * @param defaultValue
+     * @return returns <code>map[key]</code> if pressent and is map otherwise it returns <code>defaultValue</code>
+     */
+    public GreekMap optMap(String key, GreekMap defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof GreekMap b?b:null;
+    }
+
+    /**
+     * gets map value
+     * @param key
+     * @return returns <code>map[key]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a map
+     */
+    public GreekMap getMap(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof GreekMap b) return b;
+        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+    }
+
+    /**
+     * sets a value of the map
+     * @param key
+     * @param value <code>map[key] = value</code>
+     * @throws AlphaOmegaExeption if key is not pressent
+     */
+    public void set(String key, Object value) throws AlphaOmegaExeption {
+        if (!values.containsKey(key)) throw new AlphaOmegaExeption(key+" is not pressent");
+        values.put(key, value);
+    }
+
+    /**
+     * adds a value to the map
+     * @param key
+     * @param value <code>map[key] = value</code>
+     */
+    public void add(String key, Object value) throws AlphaOmegaExeption {
+        values.put(key, value);
+    }
+
+    /**
+     * @return returns size of map
+     */
+    public int size() {
+        return values.size();
+    }
+
+    /**
+     * clears the map
+     */
+    public void clear() {
+        values.clear();
+    }
+
+    /**
+     * @return true if map is empty
+     */
+    public boolean isEmpty() {
+        return values.isEmpty();
+    }
+
+    /**
+     * @param key
+     * @return returns true if <code>map[key]</code> is pressent
+     */
+    public boolean contains(String key) {
+        return values.get(key) != null;
+    }
+
+    /**
+     * @param obj
+     * @return returns true if map has a mapping for obj
+     */
+    public boolean has(Object obj) {
+        return values.containsValue(obj);
+    }
+
+    /**
+     * @param o
+     * @return returns the key of the first occurrence of <code>o</code> if pressent otherwise it returns ""
+     */
+    public String keyOf(Object o) {
+        for (Entry<String, Object> entry : values.entrySet()) {
+            if (Objects.equals(entry.getValue(), o)) return entry.getKey();
+        }
+        return "";
+    }
+
+    /**
+     * removes the value at <code>key</code>
+     * @param key
+     * @return returns the value that was removed
+     * @throws AlphaOmegaExeption if key is not pressent
+     */
+    public Object remove(String key) throws AlphaOmegaExeption {
+        if (values.containsKey(key)) throw new AlphaOmegaExeption(key+" is not pressent");
+        return values.remove(key);
+    }
+
+    /**
+     * removes the first occurrence of <code>o</code>
+     * @param key
+     * @return returns true if a value was removed
+     */
+    public boolean remove(Object o) {
+        return Objects.equals(values.remove(keyOf(o)), o);
+    }
+    
+    @Override
+    public Iterator<String> iterator() {
+        return values.keySet().iterator();
+    }
+
+    public Collection<Object> values() {
+        return values.values();
+    }
+
+    @Override
+    public String toString() {
+        return values.toString();
+    }
+}
