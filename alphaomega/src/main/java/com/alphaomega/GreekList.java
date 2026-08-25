@@ -328,6 +328,39 @@ public class GreekList implements Iterable<Object> {
     }
 
     /**
+     * gets string value or null
+     * @param index
+     * @return returns <code>list[index]</code> if pressent and is string otherwise it returns <code>null</code>
+     */
+    public String optString(int index) {
+        Object object = this.opt(index);
+        return object instanceof String str?str:null;
+    }
+
+    /**
+     * gets string value or default
+     * @param index
+     * @param defaultValue
+     * @return returns <code>list[index]</code> if pressent and is string otherwise it returns <code>defaultValue</code>
+     */
+    public String optString(int index, String defaultValue) {
+        Object object = this.opt(index, defaultValue);
+        return object instanceof String str?str:defaultValue;
+    }
+
+    /**
+     * gets string value
+     * @param index
+     * @return returns <code>list[index]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a string
+     */
+    public String getString(int index) throws AlphaOmegaExeption {
+        Object object = this.get(index);
+        if (object instanceof String str) return str;
+        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+    }
+
+    /**
      * gets list value or null
      * @param index
      * @return returns <code>list[index]</code> if pressent and is list otherwise it returns <code>null</code>

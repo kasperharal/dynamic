@@ -331,6 +331,39 @@ public class GreekMap implements Iterable<String> {
     }
 
     /**
+     * gets string value or null
+     * @param index
+     * @return returns <code>table[index]</code> if pressent and is string otherwise it returns <code>null</code>
+     */
+    public String optString(String key) {
+        Object object = this.opt(key);
+        return object instanceof String str?str:null;
+    }
+
+    /**
+     * gets string value or default
+     * @param index
+     * @param defaultValue
+     * @return returns <code>table[index]</code> if pressent and is string otherwise it returns <code>defaultValue</code>
+     */
+    public String optString(String key, String defaultValue) {
+        Object object = this.opt(key, defaultValue);
+        return object instanceof String str?str:defaultValue;
+    }
+
+    /**
+     * gets string value
+     * @param index
+     * @return returns <code>table[index]</code>
+     * @throws AlphaOmegaExeption if value is not pressent or not a string
+     */
+    public String getString(String key) throws AlphaOmegaExeption {
+        Object object = this.get(key);
+        if (object instanceof String str) return str;
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
+    }
+
+    /**
      * gets map value or null
      * @param key
      * @return returns <code>map[key]</code> if pressent and is list otherwise it returns <code>null</code>
