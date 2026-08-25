@@ -22,6 +22,9 @@ public class AlphaOmegaParser {
             } else if (str.matches("(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|my|ny|xi|omikron|pi|rho|sigma|tau|ypsilon|fi|khi|psi|omega)")) {
                 tokens.add(str);
                 break;
+            } else if (str.matches("->")) {
+                tokens.add(str);
+                break;
             } else if (str.matches("(true|false|null)")) {
                 tokens.add(str);
                 break;
@@ -43,7 +46,7 @@ public class AlphaOmegaParser {
             } else if (str.matches("-?\\d+")) {
                 tokens.add(str);
                 break;
-            } else if (str.matches("(?s)[\"\'].*?[^\\\\][\"\']")) {
+            } else if (str.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) {
                 tokens.add(str.translateEscapes());
                 break;
             } else if (str.matches("[\\[\\]\\(\\)\\{\\},]")) {
@@ -74,9 +77,9 @@ public class AlphaOmegaParser {
         else if (value.matches("null")) return getNull();
         else if (value.matches("-?\\d+")) return getInteger();
         else if (value.matches("-?\\d+(\\.\\d+)")) return getNumber();
-        else if (value.matches("(?s)[\"\'].*?[^\\\\][\"\']")) return getString();
+        else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return getString();
         else if (value.matches("\\[")) return getList();
-        else if (value.matches("\\(")) return getSet();
+        else if (value.matches("\\(")) return getTable();
         else if (value.matches("\\{")) return getMap();
         else throw new AlphaOmegaExeption("value syntax error");
     }
@@ -93,11 +96,13 @@ public class AlphaOmegaParser {
         return map;
     }
 
-    public GreekSet getSet() throws AlphaOmegaExeption {
-        if (!next().equals("(")) throw new AlphaOmegaExeption("set syntax error");
-        GreekSet set = new GreekSet();
+    public GreekTable getTable() throws AlphaOmegaExeption {
+        if (!next().equals("(")) throw new AlphaOmegaExeption("table syntax error");
+        GreekTable set = new GreekTable();
         while (!peek().equals(")")) {
-            set.add(getValue());
+            Object key = getValue();
+            if (!next().matches("->")) throw new AlphaOmegaExeption("table syntax error");
+            set.add(key, getValue());
             if (peek().equals(",")) next();
         }
         return set;

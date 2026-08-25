@@ -31,8 +31,8 @@ alpha-omega is a markup language
 ## compund types
 - **list:** list of values  
 *syntax:* `[...]`
-- **set:** set of unique unorderd values  
-*syntax:* `(...)`
 - **map:**  key value pairs  
-*syntax:* `{...}`
+*syntax:* `{...}` *label:* `abc:`
+- **table:** table of referenced pairs   
+*syntax:* `(...)` *reference:* `->`
 ## complex types

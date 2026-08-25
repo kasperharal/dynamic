@@ -2,6 +2,7 @@ package com.alphaomega;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import static com.alphaomega.AlphaOmega.stringify;
 
 
 public class GreekList implements Iterable<Object> {
@@ -360,35 +361,35 @@ public class GreekList implements Iterable<Object> {
     }
 
     /**
-     * gets set value or null
+     * gets table value or null
      * @param index
-     * @return returns <code>list[index]</code> if pressent and is set otherwise it returns <code>null</code>
+     * @return returns <code>list[index]</code> if pressent and is table otherwise it returns <code>null</code>
      */
-    public GreekSet optSet(int index) {
+    public GreekTable optTable(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekSet set?set:null;
+        return object instanceof GreekTable table?table:null;
     }
 
     /**
-     * gets set value or default
+     * gets table value or default
      * @param index
      * @param defaultValue
-     * @return returns <code>list[index]</code> if pressent and is set otherwise it returns <code>defaultValue</code>
+     * @return returns <code>list[index]</code> if pressent and is table otherwise it returns <code>defaultValue</code>
      */
-    public GreekSet optSet(int index, GreekSet defaultValue) {
+    public GreekTable optTable(int index, GreekTable defaultValue) {
         Object object = this.opt(index, defaultValue);
-        return object instanceof GreekSet set?set:defaultValue;
+        return object instanceof GreekTable table?table:defaultValue;
     }
 
     /**
-     * gets set value
+     * gets table value
      * @param index
      * @return returns <code>list[index]</code>
-     * @throws AlphaOmegaExeption if value is not pressent or not a set
+     * @throws AlphaOmegaExeption if value is not pressent or not a table
      */
-    public GreekSet getSet(int index) throws AlphaOmegaExeption {
+    public GreekTable getTable(int index) throws AlphaOmegaExeption {
         Object object = this.get(index);
-        if (object instanceof GreekSet set) return set;
+        if (object instanceof GreekTable table) return table;
         else throw new AlphaOmegaExeption("list["+index+"] was not found");
     }
 
@@ -519,6 +520,10 @@ public class GreekList implements Iterable<Object> {
 
     @Override
     public String toString() {
-        return values.toString();
+        String out = "[";
+        for (Object element : values) {
+            out += (out.endsWith(" ")?"":" ")+stringify(element);
+        }
+        return out+"]";
     }
 }

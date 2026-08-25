@@ -6,6 +6,6 @@ import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) throws AlphaOmegaExeption, IOException {
-        System.out.println(new GreekMap(Files.readString(Path.of("test.ao"))));
+        System.out.println(new GreekTable(Files.readString(Path.of("test.ao"))));
     }
 }

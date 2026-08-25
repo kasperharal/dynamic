@@ -112,14 +112,14 @@ public class AlphaOmega {
     }
 
     /**
-     * get set value
+     * get table value
      * @param obj
-     * @return returns set value of <code>obj</code>
-     * @throws AlphaOmegaExeption if <code>obj</code> is not a set
+     * @return returns table value of <code>obj</code>
+     * @throws AlphaOmegaExeption if <code>obj</code> is not a table
      */
-    public static GreekSet setOf(Object obj) throws AlphaOmegaExeption {
-        if (obj instanceof GreekSet b) return b;
-        else throw new AlphaOmegaExeption("value is not a set");
+    public static GreekTable tableOf(Object obj) throws AlphaOmegaExeption {
+        if (obj instanceof GreekTable b) return b;
+        else throw new AlphaOmegaExeption("value is not a table");
     }
 
     /**
@@ -131,5 +131,11 @@ public class AlphaOmega {
     public static GreekList listOf(Object obj) throws AlphaOmegaExeption {
         if (obj instanceof GreekList b) return b;
         else throw new AlphaOmegaExeption("value is not a list");
+    }
+
+    public static String stringify(Object obj) {
+        if (obj == null) return "null";
+        else if (obj instanceof String str) return '"'+str+'"';
+        else return obj.toString();
     }
 }

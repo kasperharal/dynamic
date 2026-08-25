@@ -3,43 +3,43 @@ package com.alphaomega;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import static com.alphaomega.AlphaOmega.stringify;
 
 
-public class GreekMap implements Iterable<String> {
-    protected final HashMap<String, Object> values;
+public class GreekTable implements Iterable<Object> {
+    protected final HashMap<Object, Object> values;
 
     /**
-     * creates a new GreekMap
+     * creates a new GreekTable
      */
-    public GreekMap()  {
+    public GreekTable()  {
         values = new HashMap<>();
     }
 
     /**
-     * creates a new AlphaOmegaParser and gets a map from it
+     * creates a new AlphaOmegaParser and gets a table from it
      */
-    public GreekMap(String src) throws AlphaOmegaExeption {
-        values = new AlphaOmegaParser(src).getMap().values;
+    public GreekTable(String src) throws AlphaOmegaExeption {
+        values = new AlphaOmegaParser(src).getTable().values;
     }
 
     /**
      * checks if value is null
      * @param key
-     * @return returns true if key is pressent and <code>map[key] == null</code> otherwise it returns false
+     * @return returns true if key is pressent and <code>table[key] == null</code> otherwise it returns false
      */
-    public boolean isNull(String key) {
+    public boolean isNull(Object key) {
         return values.containsKey(key) && values.get(key) == null?true:false;
     }
 
     /**
      * gets value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent otherwise it returns <code>null</code>
      */
-    public Object opt(String key) {
+    public Object opt(Object key) {
         return values.get(key);
     }
 
@@ -47,9 +47,9 @@ public class GreekMap implements Iterable<String> {
      * gets value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent otherwise it returns <code>defaultValue</code>
      */
-    public Object opt(String key, Object defaultValue) {
+    public Object opt(Object key, Object defaultValue) {
         Object object = this.opt(key);
         return object == null?defaultValue:object;
     }
@@ -57,21 +57,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent
      */
-    public Object get(String key) throws AlphaOmegaExeption {
+    public Object get(Object key) throws AlphaOmegaExeption {
         Object object = this.opt(key);
-        if (object == null) throw new AlphaOmegaExeption("map["+key+"] was not found");
+        if (object == null) throw new AlphaOmegaExeption("table["+key+"] was not found");
         return object;
     }
 
     /**
      * gets boolean value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is boolean otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is boolean otherwise it returns <code>null</code>
      */
-    public boolean optBoolean(String key) {
+    public boolean optBoolean(Object key) {
         Object object = this.opt(key);
         return object instanceof Boolean b?b:null;
     }
@@ -80,9 +80,9 @@ public class GreekMap implements Iterable<String> {
      * gets boolean value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is boolean otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is boolean otherwise it returns <code>defaultValue</code>
      */
-    public boolean optBoolean(String key, boolean defaultValue) {
+    public boolean optBoolean(Object key, boolean defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Boolean b?b:defaultValue;
     }
@@ -90,21 +90,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets boolean value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a boolean
      */
-    public boolean getBoolean(String key) throws AlphaOmegaExeption {
+    public boolean getBoolean(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Boolean b) return b;
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets byte value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is byte otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is byte otherwise it returns <code>null</code>
      */
-    public byte optByte(String key) {
+    public byte optByte(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num.byteValue():null;
     }
@@ -113,9 +113,9 @@ public class GreekMap implements Iterable<String> {
      * gets byte value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is byte otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is byte otherwise it returns <code>defaultValue</code>
      */
-    public byte optByte(String key, byte defaultValue) {
+    public byte optByte(Object key, byte defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num.byteValue():defaultValue;
     }
@@ -123,21 +123,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets byte value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a byte
      */
-    public byte getByte(String key) throws AlphaOmegaExeption {
+    public byte getByte(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num.byteValue();
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets short value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is short otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is short otherwise it returns <code>null</code>
      */
-    public short optShort(String key) {
+    public short optShort(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num.shortValue():null;
     }
@@ -146,9 +146,9 @@ public class GreekMap implements Iterable<String> {
      * gets short value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is short otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is short otherwise it returns <code>defaultValue</code>
      */
-    public short optShort(String key, short defaultValue) {
+    public short optShort(Object key, short defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num.shortValue():defaultValue;
     }
@@ -156,21 +156,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets short value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a short
      */
-    public short getShort(String key) throws AlphaOmegaExeption {
+    public short getShort(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num.shortValue();
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets int value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is int otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is int otherwise it returns <code>null</code>
      */
-    public int optInt(String key) {
+    public int optInt(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num.intValue():null;
     }
@@ -179,9 +179,9 @@ public class GreekMap implements Iterable<String> {
      * gets int value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is int otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is int otherwise it returns <code>defaultValue</code>
      */
-    public int optInt(String key, int defaultValue) {
+    public int optInt(Object key, int defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num.intValue():defaultValue;
     }
@@ -189,21 +189,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets int value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a int
      */
-    public int getInt(String key) throws AlphaOmegaExeption {
+    public int getInt(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num.intValue();
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets long value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is long otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is long otherwise it returns <code>null</code>
      */
-    public long optLong(String key) {
+    public long optLong(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num.longValue():null;
     }
@@ -212,9 +212,9 @@ public class GreekMap implements Iterable<String> {
      * gets long value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is long otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is long otherwise it returns <code>defaultValue</code>
      */
-    public long optLong(String key, long defaultValue) {
+    public long optLong(Object key, long defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num.longValue():defaultValue;
     }
@@ -222,21 +222,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets long value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a long
      */
-    public long getLong(String key) throws AlphaOmegaExeption {
+    public long getLong(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num.longValue();
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets float value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is float otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is float otherwise it returns <code>null</code>
      */
-    public float optFloat(String key) {
+    public float optFloat(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num.floatValue():null;
     }
@@ -245,9 +245,9 @@ public class GreekMap implements Iterable<String> {
      * gets float value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is float otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is float otherwise it returns <code>defaultValue</code>
      */
-    public float optFloat(String key, float defaultValue) {
+    public float optFloat(Object key, float defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num.floatValue():defaultValue;
     }
@@ -255,21 +255,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets float value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a float
      */
-    public float getFloat(String key) throws AlphaOmegaExeption {
+    public float getFloat(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num.floatValue();
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets double value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is double otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is double otherwise it returns <code>null</code>
      */
-    public double optDouble(String key) {
+    public double optDouble(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num.doubleValue():null;
     }
@@ -278,9 +278,9 @@ public class GreekMap implements Iterable<String> {
      * gets double value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is double otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is double otherwise it returns <code>defaultValue</code>
      */
-    public double optDouble(String key, double defaultValue) {
+    public double optDouble(Object key, double defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num.doubleValue():defaultValue;
     }
@@ -288,21 +288,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets double value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a double
      */
-    public double getDouble(String key) throws AlphaOmegaExeption {
+    public double getDouble(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num.doubleValue();
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets number value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is number otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is number otherwise it returns <code>null</code>
      */
-    public Number optNumber(String key) {
+    public Number optNumber(Object key) {
         Object object = this.opt(key);
         return object instanceof Number num?num:null;
     }
@@ -311,9 +311,9 @@ public class GreekMap implements Iterable<String> {
      * gets number value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is number otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is number otherwise it returns <code>defaultValue</code>
      */
-    public Number optNumber(String key, Number defaultValue) {
+    public Number optNumber(Object key, Number defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof Number num?num:defaultValue;
     }
@@ -321,21 +321,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets number value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a number
      */
-    public Number getNumber(String key) throws AlphaOmegaExeption {
+    public Number getNumber(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num;
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets map value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is list otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is list otherwise it returns <code>null</code>
      */
-    public GreekList optList(String key) {
+    public GreekList optList(Object key) {
         Object object = this.opt(key);
         return object instanceof GreekList list?list:null;
     }
@@ -344,9 +344,9 @@ public class GreekMap implements Iterable<String> {
      * gets map value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is list otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is list otherwise it returns <code>defaultValue</code>
      */
-    public GreekList optList(String key, GreekList defaultValue) {
+    public GreekList optList(Object key, GreekList defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof GreekList list?list:defaultValue;
     }
@@ -354,21 +354,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets map value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a list
      */
-    public GreekList getList(String key) throws AlphaOmegaExeption {
+    public GreekList getList(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof GreekList list) return list;
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets table value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is table otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is table otherwise it returns <code>null</code>
      */
-    public GreekTable optTable(String key) {
+    public GreekTable optTable(Object key) {
         Object object = this.opt(key);
         return object instanceof GreekTable table?table:null;
     }
@@ -377,9 +377,9 @@ public class GreekMap implements Iterable<String> {
      * gets table value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is table otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is table otherwise it returns <code>defaultValue</code>
      */
-    public GreekTable optTable(String key, GreekTable defaultValue) {
+    public GreekTable optTable(Object key, GreekTable defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof GreekTable table?table:defaultValue;
     }
@@ -387,21 +387,21 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets table value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a table
      */
-    public GreekTable getTable(String key) throws AlphaOmegaExeption {
+    public GreekTable getTable(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof GreekTable table) return table;
-        else throw new AlphaOmegaExeption("map["+key+"] was not found");
+        else throw new AlphaOmegaExeption("table["+key+"] was not found");
     }
 
     /**
      * gets map value or null
      * @param key
-     * @return returns <code>map[key]</code> if pressent and is map otherwise it returns <code>null</code>
+     * @return returns <code>table[key]</code> if pressent and is map otherwise it returns <code>null</code>
      */
-    public GreekMap optMap(String key) {
+    public GreekMap optMap(Object key) {
         Object object = this.opt(key);
         return object instanceof GreekMap map?map:null;
     }
@@ -410,9 +410,9 @@ public class GreekMap implements Iterable<String> {
      * gets map value or default
      * @param key
      * @param defaultValue
-     * @return returns <code>map[key]</code> if pressent and is map otherwise it returns <code>defaultValue</code>
+     * @return returns <code>table[key]</code> if pressent and is map otherwise it returns <code>defaultValue</code>
      */
-    public GreekMap optMap(String key, GreekMap defaultValue) {
+    public GreekMap optMap(Object key, GreekMap defaultValue) {
         Object object = this.opt(key, defaultValue);
         return object instanceof GreekMap map?map:defaultValue;
     }
@@ -420,51 +420,53 @@ public class GreekMap implements Iterable<String> {
     /**
      * gets map value
      * @param key
-     * @return returns <code>map[key]</code>
+     * @return returns <code>table[key]</code>
      * @throws AlphaOmegaExeption if value is not pressent or not a map
      */
-    public GreekMap getMap(String key) throws AlphaOmegaExeption {
+    public GreekMap getMap(Object key) throws AlphaOmegaExeption {
         Object object = this.get(key);
         if (object instanceof GreekMap map) return map;
         else throw new AlphaOmegaExeption("map["+key+"] was not found");
     }
 
     /**
-     * sets a value of the map
+     * make a table key refer to a value
      * @param key
-     * @param value <code>map[key] = value</code>
-     * @throws AlphaOmegaExeption if key is not pressent
+     * @param value <code>table[key] = value</code>
+     * @throws AlphaOmegaExeption if key does not exist
      */
-    public void set(String key, Object value) throws AlphaOmegaExeption {
-        if (!values.containsKey(key)) throw new AlphaOmegaExeption(key+" is not pressent");
+    public void set(Object key, Object value) throws AlphaOmegaExeption {
+        if (!values.containsKey(key)) throw new AlphaOmegaExeption("table does not contain "+value);
         values.put(key, value);
     }
 
     /**
-     * adds a value to the map
+     * adds a pair to the table
      * @param key
-     * @param value <code>map[key] = value</code>
+     * @param value <code>table[key] += value</code>
+     * @throws AlphaOmegaExeption if set already contain value
      */
-    public void add(String key, Object value) throws AlphaOmegaExeption {
+    public void add(Object key, Object value) throws AlphaOmegaExeption {
+        if (values.containsKey(value)) throw new AlphaOmegaExeption("set already contains "+value);
         values.put(key, value);
     }
 
     /**
-     * @return returns size of map
+     * @return returns size of table
      */
     public int size() {
         return values.size();
     }
 
     /**
-     * clears the map
+     * clears the table
      */
     public void clear() {
         values.clear();
     }
 
     /**
-     * @return true if map is empty
+     * @return true if table is empty
      */
     public boolean isEmpty() {
         return values.isEmpty();
@@ -472,15 +474,15 @@ public class GreekMap implements Iterable<String> {
 
     /**
      * @param key
-     * @return returns true if <code>map[key]</code> is pressent
+     * @return returns true if <code>table[key]</code> is pressent
      */
-    public boolean contains(String key) {
+    public boolean contains(Object key) {
         return values.get(key) != null;
     }
 
     /**
      * @param obj
-     * @return returns true if map has a mapping for obj
+     * @return returns true if table can provide obj
      */
     public boolean has(Object obj) {
         return values.containsValue(obj);
@@ -488,13 +490,13 @@ public class GreekMap implements Iterable<String> {
 
     /**
      * @param o
-     * @return returns the key of the first occurrence of <code>o</code> if pressent otherwise it returns ""
+     * @return returns the key of the first occurrence of <code>o</code> if pressent otherwise it returns null
      */
-    public String keyOf(Object o) {
-        for (Entry<String, Object> entry : values.entrySet()) {
+    public Object keyOf(Object o) {
+        for (Entry<Object, Object> entry : values.entrySet()) {
             if (Objects.equals(entry.getValue(), o)) return entry.getKey();
         }
-        return "";
+        return null;
     }
 
     /**
@@ -503,13 +505,13 @@ public class GreekMap implements Iterable<String> {
      * @return returns the value that was removed
      * @throws AlphaOmegaExeption if key is not pressent
      */
-    public Object remove(String key) throws AlphaOmegaExeption {
+    public Object remove(Object key) throws AlphaOmegaExeption {
         if (values.containsKey(key)) throw new AlphaOmegaExeption(key+" is not pressent");
         return values.remove(key);
     }
-    
+
     @Override
-    public Iterator<String> iterator() {
+    public Iterator<Object> iterator() {
         return values.keySet().iterator();
     }
 
@@ -520,8 +522,8 @@ public class GreekMap implements Iterable<String> {
     @Override
     public String toString() {
         String out = "(";
-        for (Entry<String, Object> element : values.entrySet()) {
-            out += (out.endsWith(" ")?"":" ")+element.getKey()+":"+stringify(element.getValue());
+        for (Entry<Object, Object> element : values.entrySet()) {
+            out += (out.endsWith(" ") || out.endsWith("(")?"":" ")+stringify(element.getKey())+"->"+stringify(element.getValue());
         }
         return out+")";
     }
