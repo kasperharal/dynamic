@@ -1,20 +1,21 @@
-package com.alphaomega;
+package com.dynamic;
+
+import static com.dynamic.Dynamic.stringify;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import static com.alphaomega.AlphaOmega.stringify;
 
 
-public class GreekSet implements Iterable<Object> {
+public class DynamicSet implements Iterable<Object> {
     protected final HashSet<Object> values;
     
-    public GreekSet()  {
+    public DynamicSet()  {
         values = new HashSet<>();
     }
 
     
-    public GreekSet(String src) throws AlphaOmegaExeption {
-        values = new AlphaOmegaParser(src).getSet().values;
+    public DynamicSet(String src) throws DynamicExeption {
+        values = new DynamicParser(src).getSet().values;
     }
     
     public void add(Object value) {

@@ -1,15 +1,15 @@
-package com.alphaomega;
+package com.dynamic;
 
 import java.util.ArrayList;
 
-public class AlphaOmegaParser {
+public class DynamicParser {
     private final ArrayList<String> tokens = new ArrayList<>();
     private int i;
-    public AlphaOmegaParser(String src) throws AlphaOmegaExeption {
+    public DynamicParser(String src) throws DynamicExeption {
         while (!src.isEmpty()) {
             String line = src.trim();
             line = detoken(line).trim();
-            if (src.equals(line)) throw new AlphaOmegaExeption("unknown token error");
+            if (src.equals(line)) throw new DynamicExeption("unknown token error");
             src = line;
         }
     }
@@ -71,7 +71,7 @@ public class AlphaOmegaParser {
         return tokens.get(i);
     }
 
-    public Object getValue() throws AlphaOmegaExeption { // TODO add complex type parsing
+    public Object getValue() throws DynamicExeption { // TODO add complex type parsing
         String value = peek();
         if (value.matches("(true|false)")) return getBoolean();
         else if (value.matches("null")) return getNull();
@@ -81,16 +81,16 @@ public class AlphaOmegaParser {
         else if (value.matches("\\[")) return getList();
         else if (value.matches("\\(")) return getSet();
         else if (value.matches("\\{")) return getMap();
-        else throw new AlphaOmegaExeption("value syntax error");
+        else throw new DynamicExeption("value syntax error");
     }
 
 
-    public GreekMap getMap() throws AlphaOmegaExeption {
-        if (!next().equals("{")) throw new AlphaOmegaExeption("map syntax error");
-        GreekMap map = new GreekMap();
+    public DynamicMap getMap() throws DynamicExeption {
+        if (!next().equals("{")) throw new DynamicExeption("map syntax error");
+        DynamicMap map = new DynamicMap();
         while (!peek().equals("}")) {
             String key = next();
-            if (!key.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) throw new AlphaOmegaExeption("map syntax error");
+            if (!key.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) throw new DynamicExeption("map syntax error");
             Object value = getValue();
             map.add(key.substring(0, key.length()-1), value);
             if (peek().equals(",")) next();
@@ -99,9 +99,9 @@ public class AlphaOmegaParser {
     }
 
 
-    public GreekSet getSet() throws AlphaOmegaExeption {
-        if (!next().equals("(")) throw new AlphaOmegaExeption("set syntax error");
-        GreekSet set = new GreekSet();
+    public DynamicSet getSet() throws DynamicExeption {
+        if (!next().equals("(")) throw new DynamicExeption("set syntax error");
+        DynamicSet set = new DynamicSet();
         while (!peek().equals(")")) {
             set.add(getValue());
             if (peek().equals(",")) next();
@@ -109,9 +109,9 @@ public class AlphaOmegaParser {
         return set;
     }
 
-    public GreekList getList() throws AlphaOmegaExeption {
-        if (!next().equals("[")) throw new AlphaOmegaExeption("list syntax error");
-        GreekList list = new GreekList();
+    public DynamicList getList() throws DynamicExeption {
+        if (!next().equals("[")) throw new DynamicExeption("list syntax error");
+        DynamicList list = new DynamicList();
         while (!peek().equals("]")) {
             list.add(getValue());
             if (peek().equals(",")) next();
@@ -124,33 +124,33 @@ public class AlphaOmegaParser {
         return value.substring(1, value.length()-1);
     }
 
-    public Number getNumber() throws AlphaOmegaExeption {
+    public Number getNumber() throws DynamicExeption {
         try {
             return Double.valueOf(next());
         } catch (NumberFormatException e) {
-            throw new AlphaOmegaExeption("number syntax error");
+            throw new DynamicExeption("number syntax error");
         }
     }
 
-    public Number getInteger() throws AlphaOmegaExeption {
+    public Number getInteger() throws DynamicExeption {
         try {
             return Long.valueOf(next());
         } catch (NumberFormatException e) {
-            throw new AlphaOmegaExeption("integer syntax error");
+            throw new DynamicExeption("integer syntax error");
         }
     }
 
-    public boolean getBoolean() throws AlphaOmegaExeption {
+    public boolean getBoolean() throws DynamicExeption {
         return switch (next()) {
             case "true" -> true;
             case "false" -> false;
-            default -> throw new AlphaOmegaExeption("boolean syntax error");
+            default -> throw new DynamicExeption("boolean syntax error");
         };
     }
 
-    public Object getNull() throws AlphaOmegaExeption {
+    public Object getNull() throws DynamicExeption {
         if (next().equals("null")) return null;
-        else throw new AlphaOmegaExeption("null syntax error");
+        else throw new DynamicExeption("null syntax error");
     }
 
     @Override

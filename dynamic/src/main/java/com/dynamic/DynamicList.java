@@ -1,20 +1,21 @@
-package com.alphaomega;
+package com.dynamic;
+
+import static com.dynamic.Dynamic.stringify;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import static com.alphaomega.AlphaOmega.stringify;
 
 
-public class GreekList implements Iterable<Object> {
+public class DynamicList implements Iterable<Object> {
     protected final ArrayList<Object> values;
     
-    public GreekList()  {
+    public DynamicList()  {
         values = new ArrayList<>();
     }
 
     
-    public GreekList(String src) throws AlphaOmegaExeption {
-        values = new AlphaOmegaParser(src).getList().values;
+    public DynamicList(String src) throws DynamicExeption {
+        values = new DynamicParser(src).getList().values;
     }
 
     
@@ -34,9 +35,9 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public Object get(int index) throws AlphaOmegaExeption {
+    public Object get(int index) throws DynamicExeption {
         Object object = this.opt(index);
-        if (object == null) throw new AlphaOmegaExeption("list["+index+"] was not found");
+        if (object == null) throw new DynamicExeption("list["+index+"] was not found");
         return object;
     }
 
@@ -53,10 +54,10 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public boolean getBoolean(int index) throws AlphaOmegaExeption {
+    public boolean getBoolean(int index) throws DynamicExeption {
         Object object = this.get(index);
         if (object instanceof Boolean b) return b;
-        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+        else throw new DynamicExeption("list["+index+"] was not found");
     }
 
     
@@ -70,7 +71,7 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public byte getByte(int index) throws AlphaOmegaExeption {
+    public byte getByte(int index) throws DynamicExeption {
         return getNumber(index).byteValue();
     }
 
@@ -85,7 +86,7 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public short getShort(int index) throws AlphaOmegaExeption {
+    public short getShort(int index) throws DynamicExeption {
         return getNumber(index).shortValue();
     }
 
@@ -100,7 +101,7 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public int getInt(int index) throws AlphaOmegaExeption {
+    public int getInt(int index) throws DynamicExeption {
         return getNumber(index).intValue();
     }
 
@@ -115,7 +116,7 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public long getLong(int index) throws AlphaOmegaExeption {
+    public long getLong(int index) throws DynamicExeption {
         return  getNumber(index).longValue();
     }
 
@@ -130,7 +131,7 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public float getFloat(int index) throws AlphaOmegaExeption {
+    public float getFloat(int index) throws DynamicExeption {
         return getNumber(index).floatValue();
     }
 
@@ -145,7 +146,7 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public double getDouble(int index) throws AlphaOmegaExeption {
+    public double getDouble(int index) throws DynamicExeption {
         return getNumber(index).doubleValue();
     }
 
@@ -162,10 +163,10 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public Number getNumber(int index) throws AlphaOmegaExeption {
+    public Number getNumber(int index) throws DynamicExeption {
         Object object = this.get(index);
         if (object instanceof Number num) return num;
-        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+        else throw new DynamicExeption("list["+index+"] was not found");
     }
 
     
@@ -181,78 +182,78 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public String getString(int index) throws AlphaOmegaExeption {
+    public String getString(int index) throws DynamicExeption {
         Object object = this.get(index);
         if (object instanceof String str) return str;
-        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+        else throw new DynamicExeption("list["+index+"] was not found");
     }
 
     
-    public GreekList optList(int index) {
+    public DynamicList optList(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekList list?list:null;
+        return object instanceof DynamicList list?list:null;
     }
 
     
-    public GreekList optList(int index, GreekList defaultValue) {
-        GreekList list = this.optList(index);
+    public DynamicList optList(int index, DynamicList defaultValue) {
+        DynamicList list = this.optList(index);
         return list == null?list:defaultValue;
     }
 
     
-    public GreekList getList(int index) throws AlphaOmegaExeption {
+    public DynamicList getList(int index) throws DynamicExeption {
         Object object = this.get(index);
-        if (object instanceof GreekList list) return list;
-        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+        if (object instanceof DynamicList list) return list;
+        else throw new DynamicExeption("list["+index+"] was not found");
     }
 
     
-    public GreekSet optSet(int index) {
+    public DynamicSet optSet(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekSet set?set:null;
+        return object instanceof DynamicSet set?set:null;
     }
 
     
-    public GreekSet optSet(int index, GreekSet defaultValue) {
-        GreekSet set = this.optSet(index);
+    public DynamicSet optSet(int index, DynamicSet defaultValue) {
+        DynamicSet set = this.optSet(index);
         return set == null?defaultValue:set;
     }
 
     
-    public GreekSet getSet(int index) throws AlphaOmegaExeption {
+    public DynamicSet getSet(int index) throws DynamicExeption {
         Object object = this.get(index);
-        if (object instanceof GreekSet set) return set;
-        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+        if (object instanceof DynamicSet set) return set;
+        else throw new DynamicExeption("list["+index+"] was not found");
     }
 
     
-    public GreekMap optMap(int index) {
+    public DynamicMap optMap(int index) {
         Object object = this.opt(index);
-        return object instanceof GreekMap map?map:null;
+        return object instanceof DynamicMap map?map:null;
     }
 
     
-    public GreekMap optMap(int index, GreekMap defaultValue) {
-        GreekMap map = this.optMap(index);
+    public DynamicMap optMap(int index, DynamicMap defaultValue) {
+        DynamicMap map = this.optMap(index);
         return map == null?defaultValue:map;
     }
 
     
-    public GreekMap getMap(int index) throws AlphaOmegaExeption {
+    public DynamicMap getMap(int index) throws DynamicExeption {
         Object object = this.get(index);
-        if (object instanceof GreekMap map) return map;
-        else throw new AlphaOmegaExeption("list["+index+"] was not found");
+        if (object instanceof DynamicMap map) return map;
+        else throw new DynamicExeption("list["+index+"] was not found");
     }
 
     
-    public void set(int index, Object value) throws AlphaOmegaExeption {
-        if (index < 0 && index >= values.size()) throw new AlphaOmegaExeption(index+" is out of bounds");
+    public void set(int index, Object value) throws DynamicExeption {
+        if (index < 0 && index >= values.size()) throw new DynamicExeption(index+" is out of bounds");
         values.set(index, value);
     }
 
     
-    public void add(int index, Object value) throws AlphaOmegaExeption {
-        if (index < 0 && index > values.size()) throw new AlphaOmegaExeption(index+" is out of bounds");
+    public void add(int index, Object value) throws DynamicExeption {
+        if (index < 0 && index > values.size()) throw new DynamicExeption(index+" is out of bounds");
         values.add(index, value);
     }
 
@@ -287,8 +288,8 @@ public class GreekList implements Iterable<Object> {
     }
 
     
-    public Object remove(int index) throws AlphaOmegaExeption {
-        if (index < 0 && index >= values.size()) throw new AlphaOmegaExeption(index+" is out of bounds");
+    public Object remove(int index) throws DynamicExeption {
+        if (index < 0 && index >= values.size()) throw new DynamicExeption(index+" is out of bounds");
         return values.remove(index);
     }
     

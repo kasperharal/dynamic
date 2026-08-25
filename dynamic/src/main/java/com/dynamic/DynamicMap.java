@@ -1,22 +1,23 @@
-package com.alphaomega;
+package com.dynamic;
+
+import static com.dynamic.Dynamic.stringify;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Map.Entry;
-import static com.alphaomega.AlphaOmega.stringify;
 
 
-public class GreekMap implements Iterable<String> {
+public class DynamicMap implements Iterable<String> {
     protected final HashMap<String, Object> values;
     
-    public GreekMap()  {
+    public DynamicMap()  {
         values = new HashMap<>();
     }
 
     
-    public GreekMap(String src) throws AlphaOmegaExeption {
-        values = new AlphaOmegaParser(src).getMap().values;
+    public DynamicMap(String src) throws DynamicExeption {
+        values = new DynamicParser(src).getMap().values;
     }
 
     
@@ -36,9 +37,9 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public Object get(String key) throws AlphaOmegaExeption {
+    public Object get(String key) throws DynamicExeption {
         Object object = this.opt(key);
-        if (object == null) throw new AlphaOmegaExeption("list["+key+"] was not found");
+        if (object == null) throw new DynamicExeption("list["+key+"] was not found");
         return object;
     }
 
@@ -55,10 +56,10 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public boolean getBoolean(String key) throws AlphaOmegaExeption {
+    public boolean getBoolean(String key) throws DynamicExeption {
         Object object = this.get(key);
         if (object instanceof Boolean b) return b;
-        else throw new AlphaOmegaExeption("list["+key+"] was not found");
+        else throw new DynamicExeption("list["+key+"] was not found");
     }
 
     
@@ -72,7 +73,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public byte getByte(String key) throws AlphaOmegaExeption {
+    public byte getByte(String key) throws DynamicExeption {
         return getNumber(key).byteValue();
     }
 
@@ -87,7 +88,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public short getShort(String key) throws AlphaOmegaExeption {
+    public short getShort(String key) throws DynamicExeption {
         return getNumber(key).shortValue();
     }
 
@@ -102,7 +103,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public int getInt(String key) throws AlphaOmegaExeption {
+    public int getInt(String key) throws DynamicExeption {
         return getNumber(key).intValue();
     }
 
@@ -117,7 +118,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public long getLong(String key) throws AlphaOmegaExeption {
+    public long getLong(String key) throws DynamicExeption {
         return  getNumber(key).longValue();
     }
 
@@ -132,7 +133,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public float getFloat(String key) throws AlphaOmegaExeption {
+    public float getFloat(String key) throws DynamicExeption {
         return getNumber(key).floatValue();
     }
 
@@ -147,7 +148,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public double getDouble(String key) throws AlphaOmegaExeption {
+    public double getDouble(String key) throws DynamicExeption {
         return getNumber(key).doubleValue();
     }
 
@@ -164,10 +165,10 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public Number getNumber(String key) throws AlphaOmegaExeption {
+    public Number getNumber(String key) throws DynamicExeption {
         Object object = this.get(key);
         if (object instanceof Number num) return num;
-        else throw new AlphaOmegaExeption("list["+key+"] was not found");
+        else throw new DynamicExeption("list["+key+"] was not found");
     }
 
     
@@ -183,78 +184,78 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public String getString(String key) throws AlphaOmegaExeption {
+    public String getString(String key) throws DynamicExeption {
         Object object = this.get(key);
         if (object instanceof String str) return str;
-        else throw new AlphaOmegaExeption("list["+key+"] was not found");
+        else throw new DynamicExeption("list["+key+"] was not found");
     }
 
     
-    public GreekList optList(String key) {
+    public DynamicList optList(String key) {
         Object object = this.opt(key);
-        return object instanceof GreekList list?list:null;
+        return object instanceof DynamicList list?list:null;
     }
 
     
-    public GreekList optList(String key, GreekList defaultValue) {
-        GreekList list = this.optList(key);
+    public DynamicList optList(String key, DynamicList defaultValue) {
+        DynamicList list = this.optList(key);
         return list == null?list:defaultValue;
     }
 
     
-    public GreekList getList(String key) throws AlphaOmegaExeption {
+    public DynamicList getList(String key) throws DynamicExeption {
         Object object = this.get(key);
-        if (object instanceof GreekList list) return list;
-        else throw new AlphaOmegaExeption("list["+key+"] was not found");
+        if (object instanceof DynamicList list) return list;
+        else throw new DynamicExeption("list["+key+"] was not found");
     }
 
     
-    public GreekSet optSet(String key) {
+    public DynamicSet optSet(String key) {
         Object object = this.opt(key);
-        return object instanceof GreekSet set?set:null;
+        return object instanceof DynamicSet set?set:null;
     }
 
     
-    public GreekSet optSet(String key, GreekSet defaultValue) {
-        GreekSet set = this.optSet(key);
+    public DynamicSet optSet(String key, DynamicSet defaultValue) {
+        DynamicSet set = this.optSet(key);
         return set == null?defaultValue:set;
     }
 
     
-    public GreekSet getSet(String key) throws AlphaOmegaExeption {
+    public DynamicSet getSet(String key) throws DynamicExeption {
         Object object = this.get(key);
-        if (object instanceof GreekSet set) return set;
-        else throw new AlphaOmegaExeption("list["+key+"] was not found");
+        if (object instanceof DynamicSet set) return set;
+        else throw new DynamicExeption("list["+key+"] was not found");
     }
 
     
-    public GreekMap optMap(String key) {
+    public DynamicMap optMap(String key) {
         Object object = this.opt(key);
-        return object instanceof GreekMap map?map:null;
+        return object instanceof DynamicMap map?map:null;
     }
 
     
-    public GreekMap optMap(String key, GreekMap defaultValue) {
-        GreekMap map = this.optMap(key);
+    public DynamicMap optMap(String key, DynamicMap defaultValue) {
+        DynamicMap map = this.optMap(key);
         return map == null?defaultValue:map;
     }
 
     
-    public GreekMap getMap(String key) throws AlphaOmegaExeption {
+    public DynamicMap getMap(String key) throws DynamicExeption {
         Object object = this.get(key);
-        if (object instanceof GreekMap map) return map;
-        else throw new AlphaOmegaExeption("list["+key+"] was not found");
+        if (object instanceof DynamicMap map) return map;
+        else throw new DynamicExeption("list["+key+"] was not found");
     }
 
     
-    public void set(String key, Object value) throws AlphaOmegaExeption {
-        if (!values.containsKey(key)) throw new AlphaOmegaExeption(key+" does not exist");
+    public void set(String key, Object value) throws DynamicExeption {
+        if (!values.containsKey(key)) throw new DynamicExeption(key+" does not exist");
         values.put(key, value);
     }
 
     
-    public void add(String key, Object value) throws AlphaOmegaExeption {
-        if (values.containsKey(key)) throw new AlphaOmegaExeption(key+" already exists");
+    public void add(String key, Object value) throws DynamicExeption {
+        if (values.containsKey(key)) throw new DynamicExeption(key+" already exists");
         values.put(key, value);
     }
 
@@ -287,7 +288,7 @@ public class GreekMap implements Iterable<String> {
     }
 
     
-    public Object remove(String key) throws AlphaOmegaExeption {
+    public Object remove(String key) throws DynamicExeption {
         return values.remove(key);
     }
     
