@@ -555,7 +555,7 @@ public class GreekList implements Iterable<Object> {
     public String toString() {
         String out = "[";
         for (Object element : values) {
-            out += (out.endsWith(" ")?"":" ")+stringify(element);
+            out += (out.endsWith(" ") || out.endsWith("[")?"":" ")+stringify(element);
         }
         return out+"]";
     }

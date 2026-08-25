@@ -22,7 +22,7 @@ public class AlphaOmegaParser {
             } else if (str.matches("(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|my|ny|xi|omikron|pi|rho|sigma|tau|ypsilon|fi|khi|psi|omega)")) {
                 tokens.add(str);
                 break;
-            } else if (str.matches("->")) {
+            } else if (str.matches("(->|!)")) {
                 tokens.add(str);
                 break;
             } else if (str.matches("(true|false|null)")) {
@@ -79,6 +79,7 @@ public class AlphaOmegaParser {
         else if (value.matches("-?\\d+(\\.\\d+)")) return getNumber();
         else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return getString();
         else if (value.matches("\\[")) return getList();
+        else if (value.matches("!")) return getSet();
         else if (value.matches("\\(")) return getTable();
         else if (value.matches("\\{")) return getMap();
         else throw new AlphaOmegaExeption("value syntax error");
@@ -103,6 +104,17 @@ public class AlphaOmegaParser {
             Object key = getValue();
             if (!next().matches("->")) throw new AlphaOmegaExeption("table syntax error");
             set.add(key, getValue());
+            if (peek().equals(",")) next();
+        }
+        return set;
+    }
+
+    public GreekSet getSet() throws AlphaOmegaExeption {
+        if (!next().equals("!")) throw new AlphaOmegaExeption("set syntax error");
+        if (!next().equals("[")) throw new AlphaOmegaExeption("set syntax error");
+        GreekSet set = new GreekSet();
+        while (!peek().equals("]")) {
+            set.add(getValue());
             if (peek().equals(",")) next();
         }
         return set;

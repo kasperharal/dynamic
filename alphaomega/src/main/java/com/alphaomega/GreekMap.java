@@ -552,10 +552,10 @@ public class GreekMap implements Iterable<String> {
 
     @Override
     public String toString() {
-        String out = "(";
+        String out = "{";
         for (Entry<String, Object> element : values.entrySet()) {
-            out += (out.endsWith(" ")?"":" ")+element.getKey()+":"+stringify(element.getValue());
+            out += (out.endsWith(" ") || out.endsWith("{")?"":" ")+element.getKey()+":"+stringify(element.getValue());
         }
-        return out+")";
+        return out+"}";
     }
 }
