@@ -79,11 +79,11 @@ public class AlphaOmegaParser {
         else if (value.matches("-?\\d+(\\.\\d+)")) return getNumber();
         else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return getString();
         else if (value.matches("\\[")) return getList();
-        else if (value.matches("!")) return getSet();
-        else if (value.matches("\\(")) return getTable();
+        else if (value.matches("\\(")) return getSet();
         else if (value.matches("\\{")) return getMap();
         else throw new AlphaOmegaExeption("value syntax error");
     }
+
 
     public GreekMap getMap() throws AlphaOmegaExeption {
         if (!next().equals("{")) throw new AlphaOmegaExeption("map syntax error");
@@ -91,29 +91,18 @@ public class AlphaOmegaParser {
         while (!peek().equals("}")) {
             String key = next();
             if (!key.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) throw new AlphaOmegaExeption("map syntax error");
-            map.add(key.substring(0, key.length()-1), getValue());
+            Object value = getValue();
+            map.add(key.substring(0, key.length()-1), value);
             if (peek().equals(",")) next();
         }
         return map;
     }
 
-    public GreekTable getTable() throws AlphaOmegaExeption {
-        if (!next().equals("(")) throw new AlphaOmegaExeption("table syntax error");
-        GreekTable set = new GreekTable();
-        while (!peek().equals(")")) {
-            Object key = getValue();
-            if (!next().matches("->")) throw new AlphaOmegaExeption("table syntax error");
-            set.add(key, getValue());
-            if (peek().equals(",")) next();
-        }
-        return set;
-    }
 
     public GreekSet getSet() throws AlphaOmegaExeption {
-        if (!next().equals("!")) throw new AlphaOmegaExeption("set syntax error");
-        if (!next().equals("[")) throw new AlphaOmegaExeption("set syntax error");
+        if (!next().equals("(")) throw new AlphaOmegaExeption("set syntax error");
         GreekSet set = new GreekSet();
-        while (!peek().equals("]")) {
+        while (!peek().equals(")")) {
             set.add(getValue());
             if (peek().equals(",")) next();
         }

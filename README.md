@@ -1,5 +1,5 @@
-# alpha-omega
-alpha-omega is a markup language
+# dynamic
+dynamic object notation
 
 ## scalar types
 - **null:** empty value  
@@ -14,8 +14,9 @@ alpha-omega is a markup language
     - (`o` | `O`) → octal  
     - (`b` | `B`) → binary  
 - **number:**  floating-point numbers  
-*syntax:* `123.123` | `-123.123`
-*suffix:* (`f` | `F`) → floating-point
+*syntax:* `123.123` | `-123.123`  
+*suffix:* (`f` | `F`) → floating-point  
+*note:* the integer type is a subtype of number
 - **string:** character sequence  
 *syntax:* `"..."` | `'...'`  
 *patterns:* 
@@ -31,10 +32,7 @@ alpha-omega is a markup language
 ## compund types
 - **list:** sequenced list of values  
 *syntax:* `[...]`
-- **set:** a special form of unorderd list with no dublicates
-*syntax:* `![...]`
+- **set:** unorderd list with no dublicates
+*syntax:* `(...)`
 - **map:**  key value pairs  
 *syntax:* `{...}` *label:* `abc:`
-- **table:** table of referenced pairs   
-*syntax:* `(...)` *reference:* `->`
-## complex types
