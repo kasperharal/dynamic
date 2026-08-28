@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class DynamicParser {
     private final ArrayList<String> tokens = new ArrayList<>();
+    private String typeLimit = "";
     private int i;
     public DynamicParser(String src) throws DynamicExeption {
         while (!src.isEmpty()) {
@@ -18,9 +19,6 @@ public class DynamicParser {
         String str = line;
         while (!str.isEmpty()) {
             if (str.matches("#.*")) {
-                break;
-            } else if (str.matches("(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|my|ny|xi|omikron|pi|rho|sigma|tau|ypsilon|fi|khi|psi|omega)")) {
-                tokens.add(str);
                 break;
             } else if (str.matches("(->|!)")) {
                 tokens.add(str);
@@ -71,7 +69,7 @@ public class DynamicParser {
         return tokens.get(i);
     }
 
-    public Object getValue() throws DynamicExeption { // TODO add complex type parsing
+    public Object getValue() throws DynamicExeption {
         String value = peek();
         if (value.matches("(true|false)")) return getBoolean();
         else if (value.matches("null")) return getNull();
