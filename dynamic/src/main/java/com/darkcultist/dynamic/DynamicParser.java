@@ -1,10 +1,9 @@
-package com.dynamic;
+package com.darkcultist.dynamic;
 
 import java.util.ArrayList;
 
 public class DynamicParser {
     private final ArrayList<String> tokens = new ArrayList<>();
-    private String typeLimit = "";
     private int i;
     public DynamicParser(String src) throws DynamicExeption {
         while (!src.isEmpty()) {
@@ -35,14 +34,11 @@ public class DynamicParser {
             } else if (str.matches("-?[0-7]+[bB]")) {
                 tokens.add(""+Long.parseLong(str.substring(0, str.length()-1), 2));
                 break;
-            } else if (str.matches("-?\\d+[fF]")) {
-                tokens.add(str+".0");
-                break;
-            } else if (str.matches("-?\\d+(\\.\\d+)[fF]?")) {
-                tokens.add(str.substring(0, str.length()-1));
-                break;
-            } else if (str.matches("-?\\d+")) {
+            } else if (str.matches("-?\\d+(\\.\\d+)?")) {
                 tokens.add(str);
+                break;
+            } else if (str.matches("\\d+%")) {
+                tokens.add(""+Long.parseLong(str.substring(0, str.length()-1))/100d);
                 break;
             } else if (str.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) {
                 tokens.add(str.translateEscapes());
@@ -60,24 +56,35 @@ public class DynamicParser {
     }
 
     public String next() {
-        if (i < 0 && i >= tokens.size()) return "";
+        if (i < 0 || i >= tokens.size()) return "";
         return tokens.get(i++);
     }
 
     public String peek() {
-        if (i < 0 && i >= tokens.size()) return "";
+        if (i < 0 || i >= tokens.size()) return "";
         return tokens.get(i);
+    }
+
+    public boolean isValue() {
+        String value = peek();
+        if (value.matches("(true|false)")) return true;
+        else if (value.matches("null")) return true;
+        else if (value.matches("-?\\d+(\\.\\d+)?")) return true;
+        else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return true;
+        else if (value.matches("\\[")) return true;
+        else if (value.matches("\\(")) return true;
+        else if (value.matches("\\{")) return true;
+        else return false;
     }
 
     public Object getValue() throws DynamicExeption {
         String value = peek();
         if (value.matches("(true|false)")) return getBoolean();
         else if (value.matches("null")) return getNull();
-        else if (value.matches("-?\\d+")) return getInteger();
-        else if (value.matches("-?\\d+(\\.\\d+)")) return getNumber();
+        else if (value.matches("-?\\d+(\\.\\d+)?")) return getNumber();
         else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return getString();
         else if (value.matches("\\[")) return getList();
-        else if (value.matches("\\(")) return getSet();
+        else if (value.matches("\\(")) return getObject();
         else if (value.matches("\\{")) return getMap();
         else throw new DynamicExeption("value syntax error");
     }
@@ -97,14 +104,22 @@ public class DynamicParser {
     }
 
 
-    public DynamicSet getSet() throws DynamicExeption {
-        if (!next().equals("(")) throw new DynamicExeption("set syntax error");
-        DynamicSet set = new DynamicSet();
+    public DynamicObject getObject() throws DynamicExeption {
+        if (!next().equals("(")) throw new DynamicExeption("object syntax error");
+        DynamicObject object = new DynamicObject();
         while (!peek().equals(")")) {
-            set.add(getValue());
+            if (isValue()) {
+                object.add(getValue());
+            } else {
+                String key = next();
+                if (!key.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) throw new DynamicExeption("map syntax error");
+                Object value = getValue();
+                object.put(key.substring(0, key.length()-1), value);
+            }
+            
             if (peek().equals(",")) next();
         }
-        return set;
+        return object;
     }
 
     public DynamicList getList() throws DynamicExeption {
@@ -127,14 +142,6 @@ public class DynamicParser {
             return Double.valueOf(next());
         } catch (NumberFormatException e) {
             throw new DynamicExeption("number syntax error");
-        }
-    }
-
-    public Number getInteger() throws DynamicExeption {
-        try {
-            return Long.valueOf(next());
-        } catch (NumberFormatException e) {
-            throw new DynamicExeption("integer syntax error");
         }
     }
 

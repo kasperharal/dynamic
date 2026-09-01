@@ -1,6 +1,6 @@
-package com.dynamic;
+package com.darkcultist.dynamic;
 
-import static com.dynamic.Dynamic.stringify;
+import static com.darkcultist.dynamic.Dynamic.stringify;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -208,21 +208,21 @@ public class DynamicList implements Iterable<Object> {
     }
 
     
-    public DynamicSet optSet(int index) {
+    public DynamicObject optObj(int index) {
         Object object = this.opt(index);
-        return object instanceof DynamicSet set?set:null;
+        return object instanceof DynamicObject obj?obj:null;
     }
 
     
-    public DynamicSet optSet(int index, DynamicSet defaultValue) {
-        DynamicSet set = this.optSet(index);
-        return set == null?defaultValue:set;
+    public DynamicObject optObj(int index, DynamicObject defaultValue) {
+        DynamicObject obj = this.optObj(index);
+        return obj == null?defaultValue:obj;
     }
 
     
-    public DynamicSet getSet(int index) throws DynamicExeption {
+    public DynamicObject getObj(int index) throws DynamicExeption {
         Object object = this.get(index);
-        if (object instanceof DynamicSet set) return set;
+        if (object instanceof DynamicObject obj) return obj;
         else throw new DynamicExeption("list["+index+"] was not found");
     }
 

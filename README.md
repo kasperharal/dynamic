@@ -32,7 +32,11 @@ dynamic object notation
 ## compund types
 - **list:** sequenced list of values  
 *syntax:* `[...]`
-- **set:** unorderd list with no dublicates
-*syntax:* `(...)`
 - **map:**  key value pairs  
-*syntax:* `{...}` *label:* `abc:`
+*syntax:* `{...}` *key:* `abc:`
+- **object:** list of pairs and values  
+*syntax:* `(...)`
+## build in object types
+- Color
+## features
+- percent `50%`

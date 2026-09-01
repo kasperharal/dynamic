@@ -1,4 +1,4 @@
-package com.dynamic;
+package com.darkcultist.dynamic;
 
 public class DynamicExeption extends Exception {
     public DynamicExeption(String msg) {

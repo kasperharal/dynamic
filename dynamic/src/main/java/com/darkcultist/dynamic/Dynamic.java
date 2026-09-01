@@ -1,4 +1,4 @@
-package com.dynamic;
+package com.darkcultist.dynamic;
 
 public class Dynamic {
     
@@ -62,9 +62,9 @@ public class Dynamic {
     }
 
     
-    public static DynamicSet setOf(Object obj) throws DynamicExeption {
-        if (obj instanceof DynamicSet b) return b;
-        else throw new DynamicExeption("value is not a set");
+    public static DynamicObject objOf(Object obj) throws DynamicExeption {
+        if (obj instanceof DynamicObject b) return b;
+        else throw new DynamicExeption("value is not a object");
     }
 
     

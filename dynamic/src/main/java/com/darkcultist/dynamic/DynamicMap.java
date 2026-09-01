@@ -1,6 +1,6 @@
-package com.dynamic;
+package com.darkcultist.dynamic;
 
-import static com.dynamic.Dynamic.stringify;
+import static com.darkcultist.dynamic.Dynamic.stringify;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -210,21 +210,21 @@ public class DynamicMap implements Iterable<String> {
     }
 
     
-    public DynamicSet optSet(String key) {
+    public DynamicObject optObj(String key) {
         Object object = this.opt(key);
-        return object instanceof DynamicSet set?set:null;
+        return object instanceof DynamicObject obj?obj:null;
     }
 
     
-    public DynamicSet optSet(String key, DynamicSet defaultValue) {
-        DynamicSet set = this.optSet(key);
-        return set == null?defaultValue:set;
+    public DynamicObject optObj(String key, DynamicObject defaultValue) {
+        DynamicObject obj = this.optObj(key);
+        return obj == null?defaultValue:obj;
     }
 
     
-    public DynamicSet getSet(String key) throws DynamicExeption {
+    public DynamicObject getObj(String key) throws DynamicExeption {
         Object object = this.get(key);
-        if (object instanceof DynamicSet set) return set;
+        if (object instanceof DynamicObject obj) return obj;
         else throw new DynamicExeption("list["+key+"] was not found");
     }
 
@@ -301,7 +301,7 @@ public class DynamicMap implements Iterable<String> {
     public String toString() {
         String out = "{";
         for (Entry<String, Object> element : values.entrySet()) {
-            out += (out.endsWith(" ") || out.endsWith("[")?"":" ")+element.getKey()+":"+stringify(element.getValue());
+            out += (out.endsWith(" ") || out.endsWith("{")?"":" ")+element.getKey()+":"+stringify(element.getValue());
         }
         return out+"}";
     }
