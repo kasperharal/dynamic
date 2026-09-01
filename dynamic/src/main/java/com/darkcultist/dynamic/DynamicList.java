@@ -44,7 +44,7 @@ public class DynamicList implements Iterable<Object> {
     
     public boolean optBoolean(int index) {
         Object object = this.opt(index);
-        return object instanceof Boolean b?b:null;
+        return object instanceof Boolean b?b:false;
     }
 
     

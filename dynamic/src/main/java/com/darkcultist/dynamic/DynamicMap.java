@@ -46,7 +46,7 @@ public class DynamicMap implements Iterable<String> {
     
     public boolean optBoolean(String key) {
         Object object = this.opt(key);
-        return object instanceof Boolean b?b:null;
+        return object instanceof Boolean b?b:false;
     }
 
     
