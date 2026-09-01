@@ -4,13 +4,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.alphaomega</groupId>
-    <artifactId>alphaomega</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.darkcultist.dynamic</groupId>
+    <artifactId>dynamic</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>dynamic</name>
+    <url>http://mavan.apache.org</url>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
     </properties>
+
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub kasperharal Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/kasperharal/dynamic</url>
+        </repository>
+    </distributionManagement>
 
 </project>
