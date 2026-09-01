@@ -1,7 +1,5 @@
 com/darkcultist/dynamic/DynamicList.class
 com/darkcultist/dynamic/DynamicParser.class
-com/darkcultist/dynamic/Dynamic.class
-com/darkcultist/dynamic/DynamicObject$DynamicType.class
-com/darkcultist/dynamic/DynamicObject.class
 com/darkcultist/dynamic/DynamicMap.class
+com/darkcultist/dynamic/Dynamic.class
 com/darkcultist/dynamic/DynamicExeption.class

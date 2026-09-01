@@ -62,12 +62,6 @@ public class Dynamic {
     }
 
     
-    public static DynamicObject objOf(Object obj) throws DynamicExeption {
-        if (obj instanceof DynamicObject b) return b;
-        else throw new DynamicExeption("value is not a object");
-    }
-
-    
     public static DynamicList listOf(Object obj) throws DynamicExeption {
         if (obj instanceof DynamicList b) return b;
         else throw new DynamicExeption("value is not a list");

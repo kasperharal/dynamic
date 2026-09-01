@@ -19,9 +19,6 @@ public class DynamicParser {
         while (!str.isEmpty()) {
             if (str.matches("#.*")) {
                 break;
-            } else if (str.matches("(->|!)")) {
-                tokens.add(str);
-                break;
             } else if (str.matches("(true|false|null)")) {
                 tokens.add(str);
                 break;
@@ -43,7 +40,7 @@ public class DynamicParser {
             } else if (str.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) {
                 tokens.add(str.translateEscapes());
                 break;
-            } else if (str.matches("[\\[\\]\\(\\)\\{\\},]")) {
+            } else if (str.matches("[\\[\\]\\{\\},]")) {
                 tokens.add(str);
                 break;
             } else if (str.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) {
@@ -72,7 +69,6 @@ public class DynamicParser {
         else if (value.matches("-?\\d+(\\.\\d+)?")) return true;
         else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return true;
         else if (value.matches("\\[")) return true;
-        else if (value.matches("\\(")) return true;
         else if (value.matches("\\{")) return true;
         else return false;
     }
@@ -84,7 +80,6 @@ public class DynamicParser {
         else if (value.matches("-?\\d+(\\.\\d+)?")) return getNumber();
         else if (value.matches("(?s)[\\\"\\'](\\\\[\\\"\\']|[^\\\"\\'])*?[\\\"\\']")) return getString();
         else if (value.matches("\\[")) return getList();
-        else if (value.matches("\\(")) return getObject();
         else if (value.matches("\\{")) return getMap();
         else throw new DynamicExeption("value syntax error");
     }
@@ -101,25 +96,6 @@ public class DynamicParser {
             if (peek().equals(",")) next();
         }
         return map;
-    }
-
-
-    public DynamicObject getObject() throws DynamicExeption {
-        if (!next().equals("(")) throw new DynamicExeption("object syntax error");
-        DynamicObject object = new DynamicObject();
-        while (!peek().equals(")")) {
-            if (isValue()) {
-                object.add(getValue());
-            } else {
-                String key = next();
-                if (!key.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) throw new DynamicExeption("map syntax error");
-                Object value = getValue();
-                object.put(key.substring(0, key.length()-1), value);
-            }
-            
-            if (peek().equals(",")) next();
-        }
-        return object;
     }
 
     public DynamicList getList() throws DynamicExeption {

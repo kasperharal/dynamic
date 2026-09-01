@@ -208,25 +208,6 @@ public class DynamicList implements Iterable<Object> {
     }
 
     
-    public DynamicObject optObj(int index) {
-        Object object = this.opt(index);
-        return object instanceof DynamicObject obj?obj:null;
-    }
-
-    
-    public DynamicObject optObj(int index, DynamicObject defaultValue) {
-        DynamicObject obj = this.optObj(index);
-        return obj == null?defaultValue:obj;
-    }
-
-    
-    public DynamicObject getObj(int index) throws DynamicExeption {
-        Object object = this.get(index);
-        if (object instanceof DynamicObject obj) return obj;
-        else throw new DynamicExeption("list["+index+"] was not found");
-    }
-
-    
     public DynamicMap optMap(int index) {
         Object object = this.opt(index);
         return object instanceof DynamicMap map?map:null;
