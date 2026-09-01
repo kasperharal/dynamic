@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>dynamic</name>
-    <url>http://mavan.apache.org</url>
+    <url>http://maven.apache.org</url>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
