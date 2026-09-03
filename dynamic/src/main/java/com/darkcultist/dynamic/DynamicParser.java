@@ -95,6 +95,7 @@ public class DynamicParser {
             map.put(key.substring(0, key.length()-1), value);
             if (peek().equals(",")) next();
         }
+        next();
         return map;
     }
 
@@ -105,6 +106,7 @@ public class DynamicParser {
             list.add(getValue());
             if (peek().equals(",")) next();
         }
+        next();
         return list;
     }
 

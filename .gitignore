@@ -1,2 +1,4 @@
 *.dyn
 .vscode
+Main.java
+Main.class
