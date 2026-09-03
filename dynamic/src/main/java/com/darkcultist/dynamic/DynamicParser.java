@@ -92,7 +92,7 @@ public class DynamicParser {
             String key = next();
             if (!key.matches("[a-zA-Z-_][a-zA-Z0-9-_]*:")) throw new DynamicExeption("map syntax error");
             Object value = getValue();
-            map.add(key.substring(0, key.length()-1), value);
+            map.put(key.substring(0, key.length()-1), value);
             if (peek().equals(",")) next();
         }
         return map;

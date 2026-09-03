@@ -229,14 +229,7 @@ public class DynamicMap implements Iterable<String> {
     }
 
     
-    public void set(String key, Object value) throws DynamicExeption {
-        if (!values.containsKey(key)) throw new DynamicExeption(key+" does not exist");
-        values.put(key, value);
-    }
-
-    
-    public void add(String key, Object value) throws DynamicExeption {
-        if (values.containsKey(key)) throw new DynamicExeption(key+" already exists");
+    public void put(String key, Object value) {
         values.put(key, value);
     }
 
